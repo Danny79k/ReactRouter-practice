@@ -1,24 +1,22 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { useFetch } from './UseFetch'
+import { CharactersContext } from '../App';
 
 export const BlogCarachter = () => {
     const params = useParams()
-    const url = `https://rickandmortyapi.com/api/character/${params.id}`
-    const { data, loading, error } = useFetch(url)
-
-    if (loading) return <div>Cargando...</div>
-    if (error) return <div>Error</div>
+    const {charactersList} = useContext(CharactersContext)
+    let paramtetrized = charactersList[params.id]
+    console.log(paramtetrized)
 
     return (
         <div className='card'>
             <Link to='/blog' className='btn btn-success'>Volver</Link>
             <div>
-                <img src={data.image} alt={data.name} className='card-img-top'/>
+                <img src={paramtetrized.image} alt={paramtetrized.name} className='card-img-top'/>
                 <div className='card-body'>
-                    <h5 className='card-text'>{data.name}</h5>
-                    <p className='card-text'>{data.species}</p>
+                    <h5 className='card-text'>{paramtetrized.name}</h5>
+                    <p className='card-text'>{paramtetrized.species}</p>
                 </div>
             </div>
         </div>
